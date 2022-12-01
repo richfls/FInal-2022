@@ -1,11 +1,9 @@
 import pygame as py
-import sys
-from mouse import Mouse
 from settings import *
 from level import Level
 
 #Class-Game-------------------------------------
-class Game:
+class Game():
     def __init__(self):
         py.init()
         self.screen = py.display.set_mode((SCREEN_WIDTH, SCREEN_HIEGHT))
@@ -14,15 +12,26 @@ class Game:
         self.start = False
         self.length = 50
     def Start(self):
+        #mouse movement and clicking
         while self.start == False:
             for event in py.event.get():
                 if event.type == py.QUIT:
                     py.quit()
-            Mouse()
+                if event.type == py.MOUSEBUTTONDOWN:
+                    if py.MOUSEBUTTONDOWN:
+                        print("click")
+                if event.type == py.MOUSEBUTTONUP:
+                    print("unclick")
+                if event.type == py.MOUSEMOTION:
+                    mousePos = event.pos
             py.draw.rect(self.screen,(255,255,255),(SCREEN_WIDTH/2-self.length,400,100,50))
+            if (mousePos[0] > (SCREEN_WIDTH/2-self.length) and mousePos[0] < (SCREEN_WIDTH/2-self.length)+50 and (mousePos[1]) > 400 and mousePos[1] < 500):
+                print("True")
             py.draw.rect(self.screen,(255,255,255),(SCREEN_WIDTH/2-self.length,500,100,50))
             py.draw.rect(self.screen,(255,255,255),(SCREEN_WIDTH/2-self.length,600,100,50))
-            py.display.update()
+            py.display.flip()
+        
+
     def run(self):
         while True: #GAME-LOOP---------------------------------------
             for event in py.event.get():
@@ -37,3 +46,4 @@ class Game:
 if __name__ == '__main__':
     g = Game()
     g.Start()#RUNS THE GAME LOOP
+
