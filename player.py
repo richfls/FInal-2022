@@ -1,78 +1,46 @@
-import pygame as py
+import pygame 
 from settings import *
-from timer import *
+from mouse import Mouse
+class Player(pygame.sprite.Sprite):
 
-class Player(py.sprite.Sprite): #Child class of pygames sprite class
-    def __init__(self, pos, group):
-        super().__init__(group)#this gives this class access to the functions inside the group class
-        self.run = False
+    def __init__(self,pos):
+        super().__init__()
+        self.image = pygame.Surface((32,64))
+        self.image.fill('blue')
+        self.rect = self.image.get_rect(topleft = pos)
+        self.isOnGround = False
+        self.direction = pygame.math.Vector2(0,0)
+        self.speed = 8
+        self.mouse = Mouse()
+        self.click = self.mouse.click
+        self.mouse_pos = self.mouse.mouse_pos
+    #health things--------------------
 
-        self.image = py.Surface((32,64))
-        self.image.fill('white')
-        self.rect = self.image.get_rect(center = pos)#set the pos to be in the center of the rect
-        #general setup
-        self.rect = self.image.get_rect(center = pos)
-        #movement
-        self.direction = py.math.Vector2()
-        self.pos = py.math.Vector2(self.rect.center)
-        self.speed = 200
-        
+    def gravity(self):
+        #Gravity function 
+        self.direction.y += .8
+         
+        self.rect.y += self.direction.y 
 
     def input(self):
-        keys = py.key.get_pressed()
-        if keys[py.K_LSHIFT]:
-            self.run = True
-            if keys[py.K_UP]:
-                self.direction.y = -2
-                self.status = "up"
-            elif keys[py.K_DOWN]:
-                self.direction.y = 2
-                self.status = "down"
-            elif keys[py.K_RIGHT]:
-                self.direction.x = 2
-                self.status = "right"
-            elif keys[py.K_LEFT]:
-                self.direction.x = -2
-                self.status = "left"
-            else:
-                self.direction.y = 0
-                self.direction.x = 0
+        for event in py.event.get():
+            self.mouse.handler(event)
+            self.mouse_pos = self.mouse.mouse_pos
+            self.click = self.mouse.click
 
-        elif keys[py.K_UP]:
-            self.direction.y = -1
-            self.status = "up"
-        elif keys[py.K_DOWN]:
-            self.direction.y = 1
-            self.status = "down"
-        elif keys[py.K_RIGHT]:
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE] == True:
+            self.jump()
+            self.isOnGround = False
+        elif keys[pygame.K_d]:
             self.direction.x = 1
-            self.status = "right"
-        elif keys[py.K_LEFT]:
+        elif keys[pygame.K_a]:
             self.direction.x = -1
-            self.status = "left"
         else:
-            self.direction.y = 0
             self.direction.x = 0
-            self.run = False
-
-       
-        print(self.direction)
-
-    def move(self, dt):
-        #print(self.direction)
-        #horizontal movement
-        if self.run == True and self.direction.magnitude() > 0 :
-           self.direction = self.direction
-        elif self.direction.magnitude() > 0:
-            self.direction = self.direction.normalize()
-        #horizontal movement
-        self.pos.x += self.direction.x * self.speed * dt
-        self.rect.centerx = self.pos.x
-        #vertical movement
-        self.pos.y += self.direction.y * self.speed * dt
-        self.rect.centery = self.pos.y 
-
-    def update(self, dt):
+                
+    def jump(self):
+        self.direction.y = -16
+    def update(self, amount):
         self.input()
-        self.move(dt)
-
+        #self.advanced_health()
