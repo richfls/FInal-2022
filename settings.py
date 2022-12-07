@@ -1,3 +1,4 @@
+import pygame as py
 LEVEL_ONE = [
 '                            ',#1
 '                            ',#2
@@ -10,7 +11,8 @@ LEVEL_ONE = [
 '    xxxx  xxxxxx  xx  xxxx  ',#9
 'xxxxxxxx  xxxxxx  xx  xxxx  ']#10
 #1234567890123456789012345679
-
+start = False
 tile_size = 64
 SCREEN_WIDTH = 1280
 SCREEN_HIEGHT = len(LEVEL_ONE * tile_size)
+screen = py.display.set_mode((SCREEN_WIDTH, SCREEN_HIEGHT))
