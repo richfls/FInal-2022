@@ -1,4 +1,5 @@
 import pygame 
+from attack import Attack
 from settings import *
 from mouse import Mouse
 class Player(pygame.sprite.Sprite):
@@ -14,8 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.mouse = Mouse()
         self.click = self.mouse.click
         self.mouse_pos = self.mouse.mouse_pos
-    #health things--------------------
-
+        self.start = start
     def gravity(self):
         #Gravity function 
         self.direction.y += .8
@@ -23,19 +23,17 @@ class Player(pygame.sprite.Sprite):
         self.rect.y += self.direction.y 
 
     def input(self):
-        for event in py.event.get():
-            self.mouse.handler(event)
-            self.mouse_pos = self.mouse.mouse_pos
-            self.click = self.mouse.click
-
+        self.atk = Attack(self.rect.x,self.rect.y,self.direction.x)
         keys = pygame.key.get_pressed()
+        if keys[pygame.K_x]:
+                self.atk.attack()
         if keys[pygame.K_SPACE] == True:
             self.jump()
             self.isOnGround = False
-        elif keys[pygame.K_d]:
-            self.direction.x = 1
         elif keys[pygame.K_a]:
             self.direction.x = -1
+        elif keys[pygame.K_d]:
+            self.direction.x = 1
         else:
             self.direction.x = 0
                 
@@ -43,4 +41,3 @@ class Player(pygame.sprite.Sprite):
         self.direction.y = -16
     def update(self, amount):
         self.input()
-        #self.advanced_health()
