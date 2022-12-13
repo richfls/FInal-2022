@@ -1,15 +1,15 @@
 import pygame as py
 LEVEL_ONE = [
-'                            ',#1
-'                            ',#2
-' xx    xxx             xx   ',#3
-' xx p                       ',#4
-' xxxx        xx          xx ',#5
-' xxxx       xx              ',#6
-' xx    x  xxxx    xx  xx    ',#7
-'       x  xxxx    xx  xxx   ',#8
-'    xxxx  xxxxxx  xx  xxxx  ',#9
-'xxxxxxxx  xxxxxx  xx  xxxx  ']#10
+'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    ',#1
+'x                                                         ',#2
+'x                   x                                     ',#3
+'x                   x                                     ',#4
+'x                   x                                     ',#5
+'x    e              x                                     ',#6
+'xxxxxxxxxxxxx       x                                     ',#7
+'x                x  x                                     ',#8
+'xp                 xx                                     ',#9
+'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    ']#10
 #1234567890123456789012345679
 start = False
 tile_size = 64
